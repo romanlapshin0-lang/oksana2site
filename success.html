@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Оплата прошла — Оксана</title>
+  <meta name="robots" content="noindex" />
+  <style>
+    :root{--bg:#ffffff;--text:#161616;--muted:#6b6570;--line:#eadfe7;--accent:#c47a94;--accent2:#f4e8ee;--radius:22px;--shadow:0 14px 40px rgba(37,20,31,.08);--max:860px}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+    .wrap{max-width:var(--max);margin:0 auto;padding:32px 16px 64px}.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px}
+    h1{margin:0 0 12px;font-size:40px;line-height:1.02;letter-spacing:-.03em}.muted{color:var(--muted);line-height:1.7}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:15px 22px;border-radius:999px;text-decoration:none;font-weight:700;border:1px solid #d7bcc8;cursor:pointer}
+    .btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)} .meta{margin-top:18px;padding:14px 16px;border-radius:16px;background:var(--accent2);color:#4d3e45}
+    a.inline{color:inherit}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <h1>Оплата прошла</h1>
+    <p class="muted">Спасибо. Нажмите кнопку ниже, чтобы написать Оксане в Telegram и получить следующий шаг по вашему формату.</p>
+    <a class="btn btn-primary" id="tgBtn" href="https://t.me/OksanaKli19" target="_blank" rel="noopener">Написать Оксане в Telegram</a>
+    <div class="meta" id="tariffName">Оплаченный формат: услуга Оксаны</div>
+    <p class="muted" style="margin-top:18px">Если кнопка не открылась: <a class="inline" href="https://t.me/OksanaKli19" target="_blank" rel="noopener">@OksanaKli19</a></p>
+    <p class="muted" style="margin-top:8px"><a class="inline" href="/index.html">Вернуться на сайт</a></p>
+  </div>
+</div>
+<script>
+  const tg = 'https://t.me/OksanaKli19';
+  const p = new URLSearchParams(location.search);
+  const tariff = p.get('tariff');
+  const map = {
+    consult: 'Консультация — 9 000 ₽',
+    strategy: 'Стратегия запуска — 56 000 ₽',
+    docs: 'Документы под ключ — 25 000 ₽',
+    turnkey: 'Запуск под ключ — 170 000 ₽'
+  };
+  document.getElementById('tariffName').textContent = 'Оплаченный формат: ' + (map[tariff] || 'услуга Оксаны');
+  const text = encodeURIComponent('Здравствуйте! Я оплатил(а): ' + (map[tariff] || 'услугу Оксаны') + '. Подскажите, пожалуйста, следующий шаг.');
+  document.getElementById('tgBtn').href = tg + '?text=' + text;
+</script>
+</body>
+</html>

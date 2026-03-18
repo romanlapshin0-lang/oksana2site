@@ -234,7 +234,7 @@ h3{font-size:24px}
         <p><strong>Разовая консультация по вашему онлайн-бизнесу с разбором текущей ситуации, рисков и точек роста.</strong></p>
         <p>Подойдёт, если нужно быстро понять, где теряются заявки, что мешает продаже, какие действия нужны дальше и на что обратить внимание в продукте, упаковке и юридической части.</p>
         <div class="service-actions">
-          <a class="btn btn-primary" href="#contacts">Записаться</a>
+          <button class="btn btn-primary" type="button" onclick="buy('consult')">Оплатить</button>
           <a class="btn btn-secondary" href="#contacts">Задать вопрос</a>
         </div>
       </article>
@@ -254,7 +254,7 @@ h3{font-size:24px}
         </ul>
         <div class="service-note">Результат: понятная стратегия под ваш проект с ясной моделью запуска, продаж и упаковки.</div>
         <div class="service-actions">
-          <a class="btn btn-primary" href="#contacts">Оставить заявку</a>
+          <button class="btn btn-primary" type="button" onclick="buy('strategy')">Оплатить</button>
           <a class="btn btn-secondary" href="#contacts">Обсудить формат</a>
         </div>
       </article>
@@ -274,7 +274,7 @@ h3{font-size:24px}
         </ul>
         <div class="service-note">Вы получаете комплект документов для размещения на сайте и работы с клиентами, адаптированный под ваш бизнес.</div>
         <div class="service-actions">
-          <a class="btn btn-primary" href="#contacts">Заказать</a>
+          <button class="btn btn-primary" type="button" onclick="buy('docs')">Оплатить</button>
           <a class="btn btn-secondary" href="#contacts">Уточнить детали</a>
         </div>
       </article>
@@ -295,7 +295,7 @@ h3{font-size:24px}
             <li>сопровождение на этапе запуска.</li>
           </ul>
           <div class="service-actions">
-            <a class="btn btn-primary" href="#contacts">Оставить заявку</a>
+            <button class="btn btn-primary" type="button" onclick="buy('turnkey')">Оплатить</button>
             <a class="btn btn-secondary" href="#contacts">Узнать подробнее</a>
           </div>
         </div>
@@ -475,6 +475,26 @@ h3{font-size:24px}
 <script>
 if (!localStorage.getItem('oksanaCookieAccepted')) {
   document.getElementById('cookieBanner').classList.add('show');
+}
+</script>
+
+<script>
+async function buy(tariff){
+  try {
+    const r = await fetch('/api/create-payment', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ tariff })
+    });
+    const data = await r.json();
+    if (!r.ok || !data.confirmation_url) {
+      alert('Не удалось создать платёж. Проверьте настройки ЮKassa и попробуйте ещё раз.');
+      return;
+    }
+    window.location.href = data.confirmation_url;
+  } catch (e) {
+    alert('Ошибка сети. Попробуйте ещё раз.');
+  }
 }
 </script>
 </body>
